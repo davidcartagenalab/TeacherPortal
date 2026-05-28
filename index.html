@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal de profesores</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- ============================================================
+         MAIN SCHEDULE PAGE
+    ============================================================ -->
+    <div class="page-wrapper">
+      <div class="main-layout">
+        <div class="hero-image">
+          <img src="assets/Header.png" alt="Header" />
+        </div>
+
+        <!-- LEFT COLUMN -->
+        <div class="left-column">
+
+          <!-- TEACHER SELECT + FORM -->
+          <section class="info-box-teacher">
+            <div class="teacher-field">
+              <h3><strong>Elija su nombre</strong></h3>
+
+              <div class="custom-select" id="teacherSelect">
+                <div class="selected">Seleccione una opción</div>
+                <div class="options">
+                  <input type="text" class="search-box" placeholder="Escriba para buscar..." />
+                  <div class="option">Aldayr</div>
+                  <div class="option">Aura</div>
+                  <div class="option">Carolina</div>
+                  <div class="option">Cindy</div>
+                  <div class="option">Jorge</div>
+                  <div class="option">Daniel Gaitán</div>
+                  <div class="option">Daniel Romero</div>
+                  <div class="option">Daniela Barcenas</div>
+                  <div class="option">David</div>
+                  <div class="option">Esteban Acosta</div>
+                  <div class="option">Esteban Barrera</div>
+                  <div class="option">Harry</div>
+                  <div class="option">John Sebastián</div>
+                  <div class="option">John Franco</div>
+                  <div class="option">Juan Pablo Duque</div>
+                  <div class="option">Julián</div>
+                  <div class="option">Laura Pérez</div>
+                  <div class="option">Maria Arango</div>
+                  <div class="option">Maria Clara</div>
+                  <div class="option">Manuela</div>
+                  <div class="option">Mateo</div>
+                  <div class="option">Melissa</div>
+                  <div class="option">Nelfer</div>
+                  <div class="option">Paula</div>
+                  <div class="option">Sandra</div>
+                  <div class="option">Vanessa</div>
+                  <div class="option">Verónica</div>
+                  <div class="option">Yenny Carolina</div>
+                </div>
+              </div>
+            </div>
+
+            <form class="email-form" id="mainForm">
+              <input type="email" placeholder="Escribe tu correo aquí" />
+              <button type="submit" name="action" value="view">Visualizar horario</button>
+              <button type="submit" name="action" value="notes">Hacer Notas</button>
+              <div class="loader hidden" id="main-loader"></div>
+            </form>
+          </section>
+
+          <!-- ROOMS -->
+          <div class="info-box hidden" id="rooms-box">
+            <h2>Salones</h2>
+            <div class="rooms-grid">
+              <div class="room-item">
+                <span class="label">Mañana</span>
+                <span id="room-manana" class="value"></span>
+              </div>
+              <div class="room-item">
+                <span class="label">Tarde</span>
+                <span id="room-tarde" class="value"></span>
+              </div>
+              <div class="room-item">
+                <span class="label">Noche</span>
+                <span id="room-noche" class="value"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STUDENTS -->
+          <section class="list-student-box hidden" id="students-section">
+            <div id="blink-group-section">
+              <h2>Grupo Blink</h2>
+              <hr />
+              <div class="students-table" id="blink-group-students"></div>
+            </div>
+            <div id="nomad-group-section">
+              <h2>Grupo Nomad</h2>
+              <hr />
+              <div class="students-table" id="nomad-group-students"></div>
+            </div>
+            <div id="private-blink-section">
+              <h2>Privados Blink</h2>
+              <hr />
+              <div class="students-table" id="private-blink-students"></div>
+            </div>
+            <div id="private-nomad-section">
+              <h2>Privados Nomad</h2>
+              <hr />
+              <div class="students-table" id="private-nomad-students"></div>
+            </div>
+          </section>
+
+          <!-- SCHEDULE TIMELINE -->
+          <div id="schedule-container" class="hidden"></div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="right-column hidden" id="right-column">
+          <div class="legend">
+            <span><div class="dot group"></div> Grupos</span>
+            <span><div class="dot private"></div> Privadas</span>
+            <span><div class="dot master"></div> Masterclass</span>
+            <span><div class="dot nomad"></div> Nomad</span>
+            <span><div class="dot event"></div> Eventos</span>
+            <span><div class="dot online"></div> Online</span>
+          </div>
+
+          <div class="grid-container" id="grid-container">
+            <div class="cell reloj">
+              <img src="assets/reloj.png" alt="Reloj" />
+            </div>
+            <div class="cell header-day">Lunes</div>
+            <div class="cell header-day">Martes</div>
+            <div class="cell header-day">Miércoles</div>
+            <div class="cell header-day">Jueves</div>
+            <div class="cell header-day">Viernes</div>
+          </div>
+
+          <button class="schedule-copy-button">Descargar horario</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         NOTES OVERLAY MODAL
+    ============================================================ -->
+    <div id="notes-overlay" class="notes-overlay hidden" role="dialog" aria-modal="true" aria-label="Sistema de Notas">
+      <div class="notes-modal">
+
+        <!-- MODAL HEADER -->
+        <div class="notes-modal-header">
+          <h1 class="notes-title">Sistema de Notas</h1>
+          <button class="notes-close-btn" id="notesCloseBtn" aria-label="Cerrar">✕</button>
+        </div>
+
+        <!-- NOTES LOADER -->
+        <div class="loader hidden" id="notes-loader"></div>
+
+        <!-- ─── GROUP NOTES TEMPLATE (cloned per group, always hidden) ─── -->
+        <section class="group-note-block hidden" id="groupNotesTemplate">
+          <div class="group-note-header">
+            <h3><strong><span class="groupName"></span></strong></h3>
+            <p class="group-level-text">Nivel actual: <span class="currentLevel"></span></p>
+          </div>
+          <div class="notes-field">
+            <label class="notes-label">Nivel próxima semana:</label>
+            <input type="text" class="groupNextLevel notes-small-input" placeholder="Ej: A2.1" />
+          </div>
+          <div class="notes-field">
+            <label class="notes-label">Notas para administración Blink</label>
+            <textarea class="groupAdminNotes notes-textarea" placeholder="Escriba las observaciones del grupo aquí..."></textarea>
+          </div>
+        </section>
+
+        <!-- GROUP NOTES INJECTED HERE -->
+        <div id="groupNotesContainer"></div>
+
+        <button id="groupSendAllBtn" class="notes-btn-primary hidden">Enviar notas del grupo</button>
+
+        <!-- ─── STUDENT WEEKLY LEVEL BLOCK (Friday only) ─── -->
+        <div id="groupLevelBlock" style="display:none;">
+          <h2 id="studentName" class="notes-student-name"></h2>
+          <p class="notes-student-meta">
+            Grupo: <strong id="groupName">—</strong> &nbsp;|&nbsp;
+            Nivel actual: <strong id="currentLevel">—</strong>
+          </p>
+          <p class="notes-sublabel">Seleccione el nivel inicial de esta semana:*</p>
+
+          <div class="notes-level-selector">
+            <div class="custom-select notes-custom-select" id="groupLevelSelect">
+              <div class="selected">Nivel esta semana</div>
+              <div class="options">
+                <div class="option">A1.1</div>
+                <div class="option">A1.2</div>
+                <div class="option">A1.3</div>
+                <div class="option">A2.1</div>
+                <div class="option">A2.2</div>
+                <div class="option">A2.3</div>
+                <div class="option">B1.1</div>
+                <div class="option">B1.2</div>
+                <div class="option">B1.3</div>
+                <div class="option">B2.1</div>
+                <div class="option">B2.2</div>
+                <div class="option">B2.3</div>
+              </div>
+            </div>
+            <button id="plusButton" class="notes-plus-btn" title="Añadir + al nivel">+</button>
+          </div>
+        </div>
+
+        <!-- ─── STUDENT NOTES BOX ─── -->
+        <section class="notes-box hidden">
+
+          <!-- Next level -->
+          <div class="notes-field">
+            <label class="notes-label">Nivel próxima semana:*</label>
+            <div class="notes-level-selector">
+              <div class="custom-select notes-custom-select" id="studentNextLevelSelect">
+                <div class="selected">Nivel próxima semana</div>
+                <div class="options">
+                  <div class="option">A1.1</div>
+                  <div class="option">A1.2</div>
+                  <div class="option">A1.3</div>
+                  <div class="option">A2.1</div>
+                  <div class="option">A2.2</div>
+                  <div class="option">A2.3</div>
+                  <div class="option">B1.1</div>
+                  <div class="option">B1.2</div>
+                  <div class="option">B1.3</div>
+                  <div class="option">B2.1</div>
+                  <div class="option">B2.2</div>
+                  <div class="option">B2.3</div>
+                  <div class="option">C1</div>
+                  <div class="option">C2</div>
+                </div>
+              </div>
+              <button id="studentPlusButton" class="notes-plus-btn" title="Añadir + al nivel">+</button>
+            </div>
+          </div>
+
+          <!-- Evaluation sliders -->
+          <div class="notes-evaluation-section">
+            <h3 class="notes-section-title">Evaluación general</h3>
+
+            <div class="notes-slider-group">
+              <label class="notes-slider-label">Gramática</label>
+              <input type="range" min="1" max="5" value="3" class="notes-slider" id="grammarSlider" />
+              <span class="notes-slider-value" id="grammarValue">3</span>
+            </div>
+
+            <div class="notes-slider-group">
+              <label class="notes-slider-label">Fluidez</label>
+              <input type="range" min="1" max="5" value="3" class="notes-slider" id="fluencySlider" />
+              <span class="notes-slider-value" id="fluencyValue">3</span>
+            </div>
+
+            <div class="notes-slider-group">
+              <label class="notes-slider-label">Vocabulario</label>
+              <input type="range" min="1" max="5" value="3" class="notes-slider" id="vocabSlider" />
+              <span class="notes-slider-value" id="vocabValue">3</span>
+            </div>
+          </div>
+
+          <!-- Topic mastery -->
+          <div class="notes-topics-section">
+            <h3 class="notes-section-title">Dominio del tema</h3>
+            <div id="topicsContainer"></div>
+          </div>
+
+          <!-- Admin notes -->
+          <div class="notes-field">
+            <label class="notes-label">Notas para administración:</label>
+            <textarea id="adminNotes" class="notes-textarea" placeholder="Escriba observaciones sobre el estudiante..."></textarea>
+          </div>
+
+          <!-- Progress + navigation -->
+          <div class="notes-progress" id="progressContainer"></div>
+          <p class="notes-student-counter" id="studentCounter">Estudiante 1 de 1</p>
+
+          <div class="notes-nav-buttons">
+            <button id="prevBtn" class="notes-btn-secondary">Anterior</button>
+            <button id="nextBtn" class="notes-btn-primary">Siguiente</button>
+          </div>
+        </section>
+
+        <!-- ─── CONFIRMATION ─── -->
+        <section class="notes-confirmation hidden">
+          <div class="notes-confirmation-icon">✓</div>
+          <h2>¡Notas guardadas con éxito!</h2>
+          <p>Gracias por enviar tus observaciones.</p>
+          <button id="backBtn" class="notes-btn-primary">Volver al inicio</button>
+        </section>
+
+      </div><!-- /.notes-modal -->
+    </div><!-- /#notes-overlay -->
+
+
+    <!-- ============================================================
+         GRID GENERATION (time rows)
+    ============================================================ -->
+    <script>
+      const container = document.getElementById("grid-container");
+      const horas = [
+        "7:00 a.m.", "8:00 a.m.", "9:00 a.m.", "10:00 a.m.", "11:00 a.m.",
+        "12:00 p.m.", "1:00 p.m.", "2:00 p.m.", "3:00 p.m.", "4:00 p.m.",
+        "5:00 p.m.", "6:00 p.m.", "7:00 p.m.",
+      ];
+      horas.forEach((hora) => {
+        container.innerHTML += `
+          <div class="cell header-time">${hora}</div>
+          ${[1,2,3,4,5].map(() => `
+            <div class="cell">
+              <div class="half top"></div>
+              <div class="half bottom"></div>
+            </div>
+          `).join("")}
+        `;
+      });
+    </script>
+
+    <!-- ============================================================
+         TOPICS BY LEVEL DATA
+    ============================================================ -->
+    <script>
+      window.topicsByLevel = {
+        "A1.1": [
+          "Presentación personal", "La conjugación en presente regular",
+          "Tipos de oraciones", "Los números",
+          "Preguntas y pronombres interrogativos", "Saludos y despedidas",
+          "Conectores del discurso", "Perífrasis verbales",
+          "Expresiones con el verbo tener", "Género y número",
+          "Contraste ser y estar", "Estructura de opiniones"
+        ],
+        "A1.1+": [
+          "La conjugación en presente regular",
+          "Preguntas y pronombres interrogativos", "Perífrasis verbales",
+          "Constraste ser y estar", "El verbo haber", "Futuro cercano",
+          "Presente continuo", "Verbos afectivos", "Contraste también y tampoco"
+        ],
+        "A1.2": [
+          "El verbo haber", "Contraste haber, tener, ser y estar",
+          "Futuro cercano", "Presente continuo",
+          "Hack: cinco estructuras básicas del presente",
+          "Adjetivos demostrativos", "Contraste saber y conocer",
+          "Contraste muy y mucho", "Verbos afectivos",
+          "Adjetivos y pronombres posesivos",
+          "Estructuras comparativas de superioridad, inferioridad e igualdad"
+        ],
+        "A1.2+": [
+          "Contraste haber, tener, ser y estar",
+          "Hack: cinco estructuras básicas del presente",
+          "Adjetivos demostrativos", "Verbos afectivos",
+          "Contraste también y tampoco", "Algunos verbos irregulares en presente",
+          "Verbos reflexivos"
+        ],
+        "A1.3": [
+          "Verbos irregulares en presente", "Adjetivos demostrativos",
+          "Verbos reflexivos", "Verbos reflexivos con cambio de significado",
+          "Adverbios de frecuencia", "Pretérito indefinido regular"
+        ],
+        "A1.3+": [
+          "Verbos irregulares en presente", "Verbos reflexivos",
+          "Adverbios de frecuencia", "Pretérito indefinido regular",
+          "Pretérito imperfecto verbos principales"
+        ],
+        "A2.1": [
+          "Pretérito indefinido regular", "Pretérito indefinido irregular",
+          "El objeto directo", "El objeto indirecto",
+          "Pretérito imperfecto regular e irregular",
+          "Constraste pretérito indefinido y pretérito imperfecto"
+        ],
+        "A2.1+": [
+          "Pretérito indefinido regular e irregular",
+          "Pretérito imperfecto regular e irregular",
+          "Constraste pretérito indefinido y pretérito imperfecto",
+          "Pretérito perfecto", "Constraste por y para",
+          "Pretérito pluscuamperfecto"
+        ],
+        "A2.2": [
+          "Constraste pretérito indefinido y pretérito imperfecto",
+          "Constraste por y para", "Preposiciones", "Pretérito perfecto",
+          "Pretérito pluscuamperfecto", "Contraste cuatro pasados",
+          "Futuro simple"
+        ],
+        "A2.2+": [
+          "Pretérito perfecto", "Pretérito pluscuamperfecto",
+          "Contraste cuatro pasados", "Futuro simple"
+        ],
+        "A2.3": [
+          "Futuro continuo", "Contraste cuatro pasados",
+          "Revisión pronombres reflexivos objeto directo e indirecto",
+          "Modo imperativo regular", "Modo imperativo irregular",
+          "Condicional regular e irregular"
+        ],
+        "A2.3+": [
+          "Modo imperativo regular", "Modo imperativo irregular",
+          "Condicional regular e irregular", "Futuro compuesto",
+          "Condicional compuesto", "Presente del subjuntivo regular",
+          "Presente del subjuntivo irregular"
+        ],
+        "B1.1": [
+          "Repaso contraste por y para",
+          "Modo imperativo regular e irregular",
+          "Contraste condicional simple y futuro simple", "Futuro compuesto",
+          "Condicional compuesto", "Presente del subjuntivo regular",
+          "Presente del subjuntivo irregular"
+        ],
+        "B1.1+": [
+          "Presente del subjuntivo regular e irregular",
+          "Constraste subjuntivo e indicativo",
+          "Conectores que requieren subjuntivo",
+          "Conectores que rigen subjuntivo e indicativo",
+          "Pretérito perfecto del subjuntivo", "Marcadores discursivos",
+          "Pretérito imperfecto del subjuntivo regular e irregular",
+          "Cláusulas condicionales del subjuntivo imperfecto"
+        ],
+        "B1.2": [
+          "Presente del subjuntivo regular e irregular",
+          "Constraste subjuntivo e indicativo",
+          "Conectores que requieren subjuntivo",
+          "Conectores que rigen subjuntivo e indicativo",
+          "Pretérito perfecto del subjuntivo", "Marcadores discursivos",
+          "Pretérito imperfecto del subjuntivo regular e irregular",
+          "Cláusulas condicionales del subjuntivo imperfecto"
+        ],
+        "B1.2+": [
+          "Presente del subjuntivo regular e irregular",
+          "Constraste subjuntivo e indicativo",
+          "Conectores que rigen al subjuntivo",
+          "Conectores que rigen al subjuntivo y al indicativo",
+          "Pretérito perfecto del subjuntivo", "Marcadores discursivos",
+          "Pretérito imperfecto del subjuntivo regular e irregular",
+          "Cláusulas condicionales del subjuntivo imperfecto",
+          "Pretérito pluscuamperfecto del subjuntivo regular e irregular",
+          "Contraste general de los tiempos del subjuntivo",
+          "Cláusulas condicionales", "Verbos de régimen preposicional",
+          "Perífrasis y formas impersonales del verbo"
+        ],
+        "B1.3": [
+          "Pretérito imperfecto del subjuntivo regular e irregular",
+          "Pretérito pluscuamperfecto del subjuntivo regular e irregular",
+          "Contraste general de los tiempos del subjuntivo",
+          "Cláusulas condicionales", "Verbos de régimen preposicional",
+          "Perífrasis y formas impersonales del verbo"
+        ],
+        "B1.3+": [
+          "Pretérito imperfecto del subjuntivo regular e irregular",
+          "Pretérito pluscuamperfecto del subjuntivo regular e irregular",
+          "Contraste general de los tiempos del subjuntivo",
+          "Cláusulas condicionales", "Verbos de régimen preposicional",
+          "Perífrasis y formas impersonales del verbo",
+          "Conectores que rigen al subjuntivo",
+          "Conectores que rigen al subjuntivo, al indicativo o el infinitivo",
+          "Correspondencias temporales", "Repaso del imperativo con pronombres"
+        ],
+        "B2.1": [
+          "Conectores que rigen al subjuntivo",
+          "Conectores que rigen al subjuntivo, al indicativo o el infinitivo",
+          "Correspondencias temporales", "Repaso del imperativo con pronombres"
+        ],
+        "B2.1+": [
+          "Conectores que rigen al subjuntivo",
+          "Conectores que rigen al subjuntivo, al indicativo o el infinitivo",
+          "Correspondencias temporales", "Repaso del imperativo con pronombres",
+          "Se impersonal", "Expresiones impersonales", "Pronombres relativos",
+          "El estilo directo e indirecto en el indicativo",
+          "El estilo indirecto en el imperativo y subjuntivo"
+        ],
+        "B2.2": [
+          "Se impersonal", "Expresiones impersonales", "Pronombres relativos",
+          "El estilo directo e indirecto en el indicativo",
+          "El estilo indirecto en el imperativo y subjuntivo"
+        ],
+        "B2.2+": [
+          "Se impersonal", "Expresiones impersonales", "Pronombres relativos",
+          "El estilo directo e indirecto en el indicativo",
+          "El estilo indirecto en el imperativo y subjuntivo",
+          "Perífrasis verbales: infinitivo, gerundio y participio",
+          "Perífrasis aspectuales", "Locuciones lingüísticas",
+          "Sufijos y prefijos"
+        ],
+        "B2.3": [
+          "Perífrasis verbales: infinitivo, gerundio y participio",
+          "Perífrasis aspectuales", "Locuciones lingüísticas", "Sufijos y prefijos"
+        ]
+      };
+    </script>
+
+    <!-- External libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Main application script -->
+    <script src="script.js"></script>
+  </body>
+</html>
