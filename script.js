@@ -192,15 +192,15 @@ function renderTimeline(container, dayData) {
   const items = getAllItemsSorted(dayData);
 
   const config = {
-    "group blink":   { icon: "/assets/Grupo-01.png" },
-    "private blink": { icon: "/assets/Private-01.png" },
-    "master blink":  { icon: "/assets/masterClass-01.png" },
-    "online blink":  { icon: "/assets/Online.png" },
-    "nomad private": { icon: "/assets/Nomad.png" },
-    "nomad group":   { icon: "/assets/Nomad.png" },
-    event:           { icon: "/assets/Eventos.png" },
-    break:           { icon: "/assets/break.png" },
-    other:           { icon: "/assets/Private-01.png" },
+    "group blink":   { icon: "assets/Grupo-01.png" },
+    "private blink": { icon: "assets/Private-01.png" },
+    "master blink":  { icon: "assets/masterClass-01.png" },
+    "online blink":  { icon: "assets/Online.png" },
+    "nomad private": { icon: "assets/Nomad.png" },
+    "nomad group":   { icon: "assets/Nomad.png" },
+    event:           { icon: "assets/Eventos.png" },
+    break:           { icon: "assets/break.png" },
+    other:           { icon: "assets/Private-01.png" },
   };
 
   items.forEach((item) => {
